@@ -1,3 +1,4 @@
+# 定长的列表
 class Array(object):
     def __init__(self, size=32):
         self._size = size
