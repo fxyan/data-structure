@@ -4,8 +4,8 @@ class Array(object):
         self._size = size
         self._item = [None] * size
 
-    # def __len__(self):
-    #     return self._size
+    def __len__(self):
+        return self._size
 
     def __getitem__(self, index):
         return self._item[index]
@@ -24,8 +24,4 @@ class Array(object):
     def __repr__(self):
         return '列表值: {}'.format(self._item)
 
-size = 10
-xx = Array(size)
-xx[0] = 2
-print(len(xx))
 
