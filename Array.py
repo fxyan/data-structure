@@ -1,6 +1,6 @@
 # 定长的列表
 class Array(object):
-    def __init__(self, size=32):
+    def __init__(self, size=8):
         self._size = size
         self._item = [None] * size
 
@@ -24,4 +24,4 @@ class Array(object):
     def __repr__(self):
         return '列表值: {}'.format(self._item)
 
-
+print(Array())
