@@ -95,8 +95,8 @@ class HashTable(object):
 def test():
     import uuid
     names = [
-        'gua',
-        'xiao',
+        'liu',
+        'trtre',
         'name',
         'web',
         'python',
