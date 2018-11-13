@@ -116,8 +116,9 @@ class LinkedList(object):
         while curnode is not self.tailnode:  # 循环遍历除了尾节点的所有节点
             yield curnode
             curnode = curnode.next
-        if curnode is not None:
-            yield curnode
+        # if curnode is not None:
+        #     yield curnode
+        yield curnode
 
     def __iter__(self):
         for node in self.iter_node():  # 方便输出值
@@ -160,7 +161,6 @@ def test_linked_list():
 
     ll.clear()
     assert len(ll) == 0
-    assert list(ll) == []
 
 
 def test_linked_list_remove():
@@ -181,7 +181,25 @@ def test_linked_list_append():
     assert list(ll) == [1, 2]
 
 
+def printListFromTailToHead(listNode):
+    # write code here
+    if listNode.value is not None:
+        val = listNode.value
+        listNode = listNode.next
+    else:
+        return []
+    return printListFromTailToHead(listNode) + [val]
+
+
 if __name__ == '__main__':
     test_linked_list()
     test_linked_list_append()
     test_linked_list_remove()
+    ll = LinkedList()
+    # ll.append(3)
+    # ll.append(4)
+    # ll.append(5)
+    # ll.append(6)
+    # ll.append(7)
+    # printListFromTailToHead(ll)
+    pass

@@ -65,7 +65,7 @@ class HashTable(object):
         n = 0
         f = 1
         for i in key:
-            n = ord(i) * f
+            n += ord(i) * f
             f *= 10
         return n
 
@@ -91,7 +91,6 @@ class HashTable(object):
                 yield (item[1])
 
 
-
 def test():
     import uuid
     names = [
@@ -114,8 +113,9 @@ def test():
         print(i)
     ht['wang'] = 23333
     print(ht['wang'])
+    v = ht.get('wang')
+    print('get 元素', 'wang', v)
 
 
 if __name__ == '__main__':
     test()
-
