@@ -124,8 +124,8 @@ def test_insert_sort():
 
 
 if __name__ == '__main__':
-    test_bubble_sort()
-    test_select_sort()
-    test_insert_sort()
+    # test_bubble_sort()
+    # test_select_sort()
+    # test_insert_sort()
     print(merge_sort([1, 3, 2, 6, 0, 6, 3, 7, 9, 4]))
-    print(quick_sort([1, 3, 2, 6, 0, 6, 3, 7, 9, 4]))
+    # print(quick_sort([1, 3, 2, 6, 0, 6, 3, 7, 9, 4]))

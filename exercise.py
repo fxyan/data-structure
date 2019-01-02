@@ -1,128 +1,228 @@
 """
-一个定长的列表首先你要确定列表的长度
-"""
-
-# class Array(object):
-#     def __init__(self, size):
-#         self.size = size
-#         self._item = [None] * self.size
-#
-#     def __len__(self):
-#         return len(self._item)
-#
-#     def __getitem__(self, item):
-#         return self._item[item]
-#
-#     def __setitem__(self, key, value):
-#         self._item[key] = value
-#
-#     def clear(self):
-#         for i in range(len(self._item)):
-#             self._item[i] = None
-#
-#     def __iter__(self):
-#         for item in self._item:
-#             yield item
-#
-#     def __repr__(self):
-#         return '{}'.format(self._item)
-
-
-# xx = Array(maxsize=8)
-# xx[0] = 9
-# xx[1] = 3
-# print(xx)
-# xx.clear()
-# print(xx)
-
-"""
 冒泡排序
     首先从第一个数循环到倒数第二个数 n-1  最后一个数已经被安排了
     内层循环开始从第一个数开始循环 n-1-i次,因为i也被安排了
     边界检测如果为没有数
+
+
+
+def bubble_sort(array):
+    if array is None or len(array) < 2:
+        return array
+    for i in range(len(array)-1):
+        for j in range(len(array)-i-1):
+            if array[j] > array[j+1]:
+                array[j], array[j+1] = array[j+1], array[j]
+
+
+def test_bubble():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    bubble_sort(array)
+    bubble_sort(array2)
+    print(array)
+    print(array2)
 """
-
-
-def bubble_sort(seq):
-    for i in range(len(seq) - 1):
-        for j in range(len(seq) - 1 - i):
-            if seq[j] > seq[j + 1]:
-                seq[j], seq[j + 1] = seq[j + 1], seq[j]
-    return seq
-
 
 """
 选择排序 就是直接定义第一个数是最小值，然后开始循环找到真正最小值的坐标然后两个交换
 不需要检查最后一个因为最后一个会在自动排序完成
+
+
+
+def select_sort(array):
+    if array is None or len(array) < 2:
+        return array
+    for i in range(len(array)-1):
+        index = i
+        for j in range(i+1, len(array)):
+            if array[index] > array[j]:
+                index = j
+        if index != i:
+            array[i], array[index] = array[index], array[i]
+
+
+def test_select():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    select_sort(array)
+    select_sort(array2)
+    print(array)
+    print(array2)
 """
-
-
-def select_sort(seq):
-    for i in range(len(seq) - 1):
-        min_size = i
-        for j in range(i + 1, len(seq)):
-            if seq[min_size] > seq[j]:
-                min_size = j
-        if min_size != i:
-            seq[i], seq[min_size] = seq[min_size], seq[i]
-    return seq
-
 
 """
 插入排序
     将一个数据插入到已经排好序的数组中
     判断他的值是不是最小的如果不是就一直前移
+
+
+def insert_sort(array):
+    for i in range(1, len(array)):
+        index = i
+        value = array[i]
+        while index > 0 and value < array[index-1]:
+            array[index] = array[index-1]
+            index -= 1
+        if index != i:
+            array[index] = value
+
+
+def test_insert():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    insert_sort(array)
+    insert_sort(array2)
+    print(array)
+    print(array2)
 """
-
-
-def insert_sort(seq):
-    n = len(seq)
-    for i in range(1, n):
-        value = seq[i]
-        pos = i
-        while pos > 0 and value < seq[pos - 1]:
-            seq[pos] = seq[pos - 1]
-            pos -= 1
-        seq[pos] = value
-    return seq
-
 
 """
 快排 使用了递归的排序
 基本思路就是找到一个中间点,然后将自己的数组分成两部分左部分右部分和中间点,然后递归回去
 
+
+import random
+def quick_sort(array):
+    if len(array) < 2 or array is None:
+        return array
+    return quick(array, 0, len(array)-1)
+
+
+def quick(array, l, r):
+    if l < r:
+        ran = random.randint(l, r)
+        print(l, r)
+        print(ran)
+        array[ran], array[r] = array[r], array[ran]
+        q = partition(array, l, r)
+        print(q)
+        quick(array, l, q[0])
+        quick(array, q[1], r)
+
+
+def partition(array, l, r):
+    left = l-1
+    right = r
+    while l < right:
+        if array[l] < array[r]:
+            left += 1
+            array[left], array[l] = array[l], array[left]
+            l += 1
+        elif array[l] > array[r]:
+            right -= 1
+            array[l], array[right] = array[right], array[l]
+        else:
+            l += 1
+    array[r], array[l] = array[l], array[r]
+    q = [left, right+1]
+    return q
+
+
+def test_quick():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    quick_sort(array)
+    quick_sort(array2)
+    print(array)
+    print(array2)
+
 """
 
+"""
+归并排序
 
-def quick_sort(seq):
-    if len(seq) < 2:
-        return seq
+
+
+def merge_sort(array):
+    if len(array) < 2 or array is None:
+        return array
+    return sort_process(array, 0, len(array)-1)
+
+
+def sort_process(array, l, r):
+    if l == r:
+        return None
     else:
-        pivot_index = 0
-        pivot_value = seq[pivot_index]
-        less_part = [i for i in seq[pivot_index + 1:] if i <= pivot_value]
-        greed_part = [i for i in seq[pivot_index + 1:] if i > pivot_value]
-        return quick_sort(less_part) + [pivot_value] + quick_sort(greed_part)
+        mid = (l+r)//2
+        sort_process(array, l, mid)
+        sort_process(array, mid+1, r)
+        merge(array, l, mid, r)
 
 
-# seq = [1, 3, 2, 6, 0, 6, 3, 7, 9, 4]
-# aa = []
-# # print(bubble_sort(aa))
-# # print(select_sort(seq))
-# # print(insert_sort(seq))
-# print(quick_sort(seq))
-# str = input()
-# list_str = str.split(',')
-# list_str[0] = list_str[0].split(' ')
-# n = int(list_str[1])
-# seq = [int(i) for i in list_str[0]]
-# print(n, seq)
-# seq = [int(i) for i in list_str1[0]]
-# print(n, seq)
-# print(list_str)
+def merge(array, l, mid, r):
+    help = []
+    left = l
+    right = mid+1
+    while left <= mid and right <= r:
+        if array[left] < array[right]:
+            help.append(array[left])
+            left += 1
+        else:
+            help.append(array[right])
+            right += 1
+    while left <= mid:
+        help.append(array[left])
+        left += 1
+    while right <= r:
+        help.append(array[right])
+        right += 1
+    for i in range(len(help)):
+        array[l+i] = help[i]
+
+
+def test_merge():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    merge_sort(array)
+    merge_sort(array2)
+    print(array)
+    print(array2)
+"""
+
+"""
+堆排序
+
+
+def heap_sort(array):
+    if len(array) < 2 or array is None:
+        return array
+    size = len(array)
+    build_max(array, size)
+    for i in range(size-1, -1, -1):
+        array[i], array[0] = array[0], array[i]
+        heap_insert(array, 0, i)
+
+
+def build_max(array, size):
+    for i in range((size-2)//2, -1, -1):
+        heap_insert(array, i, size)
+
+
+def heap_insert(array, root, size):
+    left = root * 2 + 1
+    while left < size:
+        largest = left+1 if left+1 < size and array[left+1] > array[left] else left
+        if array[root] < array[largest]:
+            array[root], array[largest] = array[largest], array[root]
+            root = largest
+            left = root * 2 + 1
+        else:
+            return
+
+
+def test_heap():
+    array = [4, 2, 1, 7, 5, 3, 2, 4]
+    array2 = [4, 4, 1]
+    heap_sort(array)
+    heap_sort(array2)
+    print(array)
+    print(array2)
+"""
+
 """
 判断数组中有没有三个数相加等于 你输入的整数
-"""
+
 
 
 # 三重循环的辣鸡写法
@@ -149,368 +249,301 @@ def equal(seq, n):
             if seq[i] + seq[j] + seq[k] < n:
                 j += 1
             elif seq[i] + seq[j] + seq[k] > n:
-                n -= 1
+                k -= 1
             elif seq[i] + seq[j] + seq[k] == n:
                 return True
     return False
-
-# print(equal([1, 2, 3, 4, 6, 8, 9, 21, 56, 90], 168))
-
-
-"""
-单链表
-需要root节点 
-tailNode节点
-len长度
-
-函数
-append right
-append left
-pop left
-pop right
-remove 
-find
-clear
-iter node
 """
 
 """
-class Node(object):
-    def __init__(self, value=None, next=None):
-        self.value = value
-        self.next = next
+判断排序之后数组的相邻的最大差值，使用非比较排序 时间复杂度为O(N)
+def maxgap(array):
+    if len(array) < 2 or array is None:
+        return array
+    smax = max(array)
+    smin = min(array)
+    if smax == smin:
+        return 0
+    size = len(array)
+    min_size = [None] * (size + 1)
+    max_size = [None] * (size + 1)
+    bool_size = [False] * (size + 1)
+    for i in range(len(array)):
+        bid = backsize(array[i], size, smax, smin)
+        max_size[bid] = array[i] if max_size[bid] is None or max_size[bid] < array[i] else max_size[bid]
+        min_size[bid] = array[i] if min_size[bid] is None or min_size[bid] > array[i] else min_size[bid]
+        bool_size[bid] = True
+    res = 0
+    print(min_size, max_size)
+    lastmax = max_size[0]
+    for i in range(len(min_size)):
+        if bool_size[i]:
+            res = max(res, max_size[i] - lastmax)
+            lastmax = max_size[i]
+    return res
 
 
-class LinkList(object):
-    def __init__(self):
-        self.root = Node()
-        self.tailnode = None
-        self.lenght = 0
-
-    def __len__(self):
-        return self.lenght
-
-    def append(self, value):
-        node = Node(value)
-        tailnode = self.tailnode
-        if tailnode is not None:
-            tailnode.next = node
-        else:
-            self.root.next = node
-        self.tailnode = node
-        self.lenght += 1
-
-    def prepend(self, value):
-        root = self.root
-        tailnode = self.tailnode
-        node = Node(value)
-        node.next = root.next
-        if tailnode is None:
-            self.tailnode = node
-        root.next = node
-        self.lenght += 1
-
-    def pop(self):
-        if self.root.next is None:
-            raise Exception('pop from empty LinkList')
-        root = self.root
-        tailnode = self.tailnode
-        if root.next == tailnode:
-            root.next = None
-            value = tailnode.value
-            tailnode = None
-        else:
-            while root.next != tailnode:
-                root = root.next
-            root.next = None
-            value = tailnode.value
-            tailnode = root
-        self.lenght -= 1
-        print(value)
-
-    def popleft(self):
-        if self.root.next is None:
-            raise Exception('pop from empty LinkList')
-        root = self.root
-        headnode = root.next
-        tailnode = self.tailnode
-        if headnode == tailnode:
-            self.tailnode = None
-        root.next = headnode.next
-        value = headnode.value
-        del headnode
-        self.lenght -= 1
-        # print(value)
-        return value
-
-    def remove(self, value):
-        root = self.root
-        current = self.root.next
-        tailnode = self.tailnode
-        while current is not None:
-            if current.value == value:
-                root.next = current.next
-                if current == tailnode:
-                    self.tailnode = root
-                del current
-                self.lenght -= 1
-                return 1
-            else:
-                root = root.next
-                current = current.next
-        return -1
-
-    def find(self, value):
-        if self.root.next is None:
-            raise Exception('find from empty LinkList')
-        current = self.root.next
-        index = 0
-        while current is not None:
-            if current.value == value:
-                return index
-            else:
-                current = current.next
-                index += 1
-        return -1
-
-    def clear(self):
-        for node in self.iter_node():
-            del node
-        self.root.next = None
-        self.tailnode = None
-        self.lenght = 0
-
-    def iter_node(self):
-        current = self.root.next
-        tailnode = self.tailnode
-        while current is not tailnode:
-            yield current
-            current = current.next
-        if current is not None:
-            yield current
-
-    def __iter__(self):
-        for node in self.iter_node():
-            yield node.value
-
-def test_linked_list():
-    ll = LinkList()
-
-    ll.append(0)
-    ll.append(1)
-    ll.append(2)
-    ll.append(3)
-    # for i in ll:
-    #     print('2', i)
-
-    assert len(ll) == 4
-    assert ll.find(2) == 2
-    assert ll.find(-1) == -1
-
-    assert ll.remove(0) == 1
-    assert ll.remove(10) == -1
-    assert ll.remove(2) == 1
-    assert len(ll) == 2
-    assert list(ll) == [1, 3]
-    assert ll.find(0) == -1
-
-    ll.prepend(0)
-    assert list(ll) == [0, 1, 3]
-    assert len(ll) == 3
-
-    headvalue = ll.popleft()
-    assert headvalue == 0
-    assert len(ll) == 2
-    assert list(ll) == [1, 3]
-
-    assert ll.popleft() == 1
-    assert list(ll) == [3]
-    ll.popleft()
-    assert len(ll) == 0
-    # print('tailnode', ll.tailnode.value)
-    assert ll.tailnode is None
-
-    ll.clear()
-    assert len(ll) == 0
-    assert list(ll) == []
+def backsize(num, size, smax, smin):
+    return (num - smin) * size // (smax - smin)
 
 
-
-def test_linked_list_remove():
-    ll = LinkList()
-    ll.append(3)
-    ll.append(4)
-    ll.append(5)
-    ll.append(6)
-    ll.append(7)
-    print(list(ll))
-    ll.remove(7)
-    print(list(ll))
-
-
-def test_linked_list_append():
-    ll = LinkList()
-    ll.prepend(1)
-    ll.append(2)
-    assert list(ll) == [1, 2]
-
-
-
-def printListFromTailToHead(listNode):
-    # write code here
-    if listNode.value is not None:
-        val = listNode.value
-        listNode = listNode.next
-    else:
-        return []
-    return printListFromTailToHead(listNode) + [val]
-
-# if __name__ == '__main__':
-#     # test_linked_list()
-#     # test_linked_list_append()
-#     # test_linked_list_remove()
-#     ll = LinkList()
-#     ll.append(3)
-#     ll.append(4)
-#     ll.append(5)
-#     ll.append(6)
-#     ll.append(7)
-#     print(list(ll))
-#     # printListFromTailToHead(ll)
-
-ll = LinkList()
-ll.append(3)
-ll.append(4)
-ll.append(5)
-ll.append(6)
-ll.append(7)
-
-
-class Solution:
-    # 返回从尾部到头部的列表值序列，例如[1,2,3]
-    def printListFromTailToHead(self, listNode):
-        # write code here
-        code = []
-        head = listNode
-        while head:
-            code.insert(0, head.val)
-            head = head.next
-        return code
+def test_max():
+    array = [4, 2, 1, 7, 5, 3, 2, 4, 17]
+    array2 = [4, 4, 1]
+    print(maxgap(array))
+    print(maxgap(array2))
 """
 
 """
-双端链表
-"""
-# class Node(object)
-#     def __init__(self, value=None, next=None, ):
+数组结构实现大小固定的队列和栈
 
-"""
-哈希函数
-"""
-
-
-class HashTable(object):
-    def __init__(self):
-        self.table_size = 20007
-        self.table = [0] * self.table_size
-
-    def _index(self, key):
-        return self._hash(key) % self.table_size
-
-    def _hash(self, key):
-        i = 0
-        f = 1
-        for j in key:
-            i += ord(j) * f
-            f *= 10
-        return i
-
-    def _insert_at_index(self, index, key, value):
-        data = [key, value]
-        v = self.table[index]
-        if isinstance(v, int):
-            self.table[index] = [data]
-        else:
-            self.table[index].append(data)
-
-    def add(self, key, value):
-        index = self._index(key)
-        self._insert_at_index(index, key, value)
-
-    def get(self, key, default=None):
-        index = self._index(key)
-        v = self.table[index]
-        if isinstance(v, list):
-            for kv in v:
-                if kv[0] == key:
-                    return kv[1]
-        else:
-            return default
-
-    def has_key(self, key):
-        index = self._index(key)
-        v = self.table_size[index]
-        for kv in v:
-            if kv[0] == key:
-                return True
-        return False
-
-
-def test():
-    import uuid
-    names = [
-        'liu',
-        'trtre',
-        'name',
-        'web',
-        'python',
-    ]
-    ht = HashTable()
-    for key in names:
-        value = uuid.uuid4()
-        ht.add(key, value)
-        print('add 元素', key, value)
-    for key in names:
-        v = ht.get(key)
-        print('get 元素', key, v)
-    # ht.items()
-    # for i in ht.values():
-    #     print(i)
-    # ht['wang'] = 23333
-    # print(ht['wang'])
-
-
-class Node(object):
-    def __init__(self, element=None, next=None):
-        self.element = element
-        self.next = next
-
-    def __repr__(self):
-        return str(self.element)
 
 
 class Stack(object):
-    def __init__(self):
-        self.head = Node()
+    def __init__(self, size):
+        self.stack = [None] * size
+        self.size = size
+        self.len = 0
 
-    def empty(self):
-        return self.head.next is None
+    def push(self, value):
+        if self.len >= self.size:
+            print('栈已经满了')
+        else:
+            self.stack[self.len] = value
+            self.len += 1
 
-    def append(self, element):
-        self.head.next = Node(element, self.head.next)
+    def get_min(self):
+        if self.len == 0:
+            return None
+        return self.stack[self.len-1]
 
     def pop(self):
-        node = self.head.next
-        if not self.empty():
-            self.head.next = node.next
-        return node
-
-    def top(self):
-        return self.head.next
-
-
-# if __name__ == '__main__':
-#     test()
+        if self.len < 0:
+            print('无数据可以出栈')
+        else:
+            self.len -= 1
+            value = self.stack[self.len]
+            # print(value)
+            return value
 
 
+def test_stack():
+    stack = Stack(3)
+    stack.push(7)
+    stack.push(8)
+    stack.push(6)
+    stack.push(77)
+    stack.pop()
+    stack.pop()
+    stack.pop()
 
+
+class Queue(object):
+    def __init__(self, size):
+        self.queue = [None] * size
+        self.size = size
+        self.end = 0
+        self.start = 0
+        self.index = 0
+
+    def push(self, value):
+        if self.index < self.size:
+            print(self.index)
+            self.queue[self.end] = value
+            self.end = 0 if self.end + 1 == self.size else self.end + 1
+            self.index += 1
+        else:
+            print('队列已满')
+
+    def pop(self):
+        if self.index > 0:
+            print(self.queue[self.start])
+            self.start = 0 if self.start + 1 == self.size else self.start + 1
+            self.index -= 1
+        else:
+            print('队列无数据')
+
+
+def test_queue():
+    queue = Queue(3)
+    queue.push(5)
+    queue.push(4)
+    queue.push(3)
+    queue.push(2)
+    queue.pop()
+    queue.pop()
+    queue.pop()
+    queue.pop()
+
+
+class Steak2():
+    def __init__(self, size):
+        self.stack3 = Stack(size)
+        self.stack4 = Stack(size)
+
+    def push(self, value):
+        self.stack3.push(value)
+        if self.stack3.get_min() is None or value < self.stack3.get_min() :
+            self.stack4.push(value)
+        else:
+            self.stack4.push(self.stack3.get_min())
+
+    def pop(self):
+        self.stack4.pop()
+        return self.stack3.pop()
+
+    def get_min(self):
+        return self.stack4.get_min()
+
+def test_steak2():
+    steak = Steak2(3)
+    steak.push(5)
+    steak.push(4)
+    steak.push(3)
+    steak.pop()
+    steak.pop()
+    print(steak.get_min())
+"""
+
+"""
+矩阵转圈打印
+
+def order_print(array):
+    tR = 0
+    tC = 0
+    dR = len(array) - 1
+    dC = len(array[0]) - 1
+    while tR <= dR and tC <= dC:
+        print_edge(array, tR, tC, dR, dC)
+        tR += 1
+        tC += 1
+        dR -= 1
+        dC -= 1
+
+
+def print_edge(array, tR, tC, dR, dC):
+    if tC == dC:
+        while tR <= dR:
+            print(array[tR][tC], end=' ')
+            tR += 1
+    elif tR == dR:
+        while tC <= dC:
+            print(array[tR][tC], end=' ')
+            tC += 1
+    else:
+        curR = tR
+        curC = tC
+        while tC < dC:
+            print(array[tR][tC], end=' ')
+            tC += 1
+        while tR < dR:
+            print(array[tR][tC], end=' ')
+            tR += 1
+        while dC > curC:
+            print(array[dR][dC], end=' ')
+            dC -= 1
+        while dR > curR:
+            print(array[dR][dC], end=' ')
+            dR -= 1
+        while dC > curC:
+            print(array[dR][dC], end=' ')
+            dC -= 1
+
+
+def test_order():
+    array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    array2 = [[1, 2, 3, 4]]
+    array3 = [[1], [2], [3]]
+    # order_print(array)
+    order_print(array2)
+    order_print(array3)
+"""
+
+"""
+将矩阵的数字转换90度
+1 2     4 1
+4 5     5 2
+
+def rotate(array):
+    tR = 0
+    tC = 0
+    dR = len(array) - 1
+    dC = len(array[0]) - 1
+    while tR < dR or tC < dC:
+        rotate_edge(array, tR, tC, dR, dC)
+        tR += 1
+        tC += 1
+        dR -= 1
+        dC -= 1
+
+
+def rotate_edge(array, tR, tC, dR, dC):
+    size = dC - tC
+    for i in range(size):
+        time = array[tR][tC+i]
+        print(i)
+        array[tR][tC+i] = array[dR-i][tC]
+        array[dR-i][tC] = array[dR][dC-i]
+        array[dR][dC-i] = array[tR+i][dC]
+        array[tR+i][dC] = time
+
+
+def test_rotate():
+    array = [[1, 2, 3], [3, 4, 5], [6, 7, 8]]
+    rotate(array)
+    print(array)
+"""
+
+"""
+之字形打印矩阵
+"""
+
+def print_zhi(array):
+    tR = 0
+    tC = 0
+    dR = 0
+    dC = 0
+    endR = len(array) - 1
+    endC = len(array[0]) - 1
+    bool_1 = True
+    while tR <= endR and dC <= endC:
+        print_level(array, tR, tC, dR, dC, bool_1)
+        tR = 0 if tC < endC else tR + 1
+        tC = tC + 1 if tC < endC else tC
+        dC = 0 if dR < endR else dC + 1
+        dR = dR + 1 if dR < endR else dR
+        bool_1 = False if bool_1 is True else True
+
+
+def print_level(array, tR, tC, dR, dC, bool_1):
+    if bool_1 is True:
+        while dR >= tR and dC <= tC:
+            print(array[dR][dC])
+            dR -= 1
+            dC += 1
+    else:
+        while tR <= dR and tC >= dC:
+            print(array[tR][tC])
+            tR += 1
+            tC -= 1
+
+
+def test_level():
+    array = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+    print_zhi(array)
+
+
+if __name__ == '__main__':
+    # test_bubble()
+    # test_select()
+    # test_insert()
+    # test_quick()
+    # test_merge()
+    # test_heap()
+    # test_max()
+    # test_stack()
+    # test_queue()
+    # test_steak2()
+    # test_order()
+    # test_rotate()
+    test_level()
