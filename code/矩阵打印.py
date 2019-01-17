@@ -144,3 +144,11 @@ if head is None or head.next is None:
         return res 
 
 """
+"""
+反转数组中从x到y的数可以使用这种办法
+def x(array, x, y):
+    if x < y:
+        array[x], array[y] = array[y], array[x]
+        return x(array, x+1, y-1)
+    return array
+"""
