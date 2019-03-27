@@ -124,6 +124,7 @@ x = [4, 2, 9, 3, 5, 2, 6, 3]
 print(merge_sort(x))
 """
 
+
 def heap_sort(array):
     if len(array) < 2 and array is None:
         return array
@@ -144,6 +145,7 @@ def heap_insert(array, index):
     while array[index] > array[int((index-1) / 2)]:
         array[index], array[int((index-1) / 2)] = array[int((index-1) / 2)], array[index]
         index = int((index - 1) / 2)
+        print(index)
 
 
 def heapfiy(array, l, root):
@@ -159,5 +161,5 @@ def heapfiy(array, l, root):
         heapfiy(array, l, large)
 
 
-x = [4, 2, 9, 3, 5, 2, 6, 3]
+x = [4, 2, 6, 1, 6, 5, 7]
 print(heap_sort(x))
