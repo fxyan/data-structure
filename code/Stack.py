@@ -29,6 +29,11 @@ class Stack(object):
             self.head.next = node.next
         return node
 
+    def peek(self):
+        if self.empty():
+            return None
+        return self.head.next
+
 
 def test():
     ss = Stack()

@@ -25,9 +25,12 @@ def sort(array, size):
 
 
 if __name__ == '__main__':
-    array = [3, 4, 5, 1, 7, 984, 34, 11]
-    array1 = []
-    array2 = [1]
-    print(select_sort(array))
-    print(select_sort(array1))
-    print(select_sort(array2))
+    # array = [3, 4, 5, 1, 7, 984, 34, 11]
+#     # array1 = []
+#     # array2 = [1]
+#     # print(select_sort(array))
+#     # print(select_sort(array1))
+#     # print(select_sort(array2))
+    array = {}
+    array[[1]] = 1
+    print([1] in array)

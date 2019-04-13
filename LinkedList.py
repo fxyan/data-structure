@@ -25,7 +25,7 @@ class LinkedList(object):
         self.root.next = node
         self.length += 1
 
-    def append(self, value):
+    def push(self, value):
         node = Node(value)
         tailnode = self.tailnode
         if tailnode is not None:  # 如果已有尾节点那么就在后面修改
@@ -128,10 +128,10 @@ class LinkedList(object):
 def test_linked_list():
     ll = LinkedList()
 
-    ll.append(0)
-    ll.append(1)
-    ll.append(2)
-    ll.append(3)
+    ll.push(0)
+    ll.push(1)
+    ll.push(2)
+    ll.push(3)
 
     assert len(ll) == 4
     assert ll.find(2) == 2
@@ -165,11 +165,11 @@ def test_linked_list():
 
 def test_linked_list_remove():
     ll = LinkedList()
-    ll.append(3)
-    ll.append(4)
-    ll.append(5)
-    ll.append(6)
-    ll.append(7)
+    ll.push(3)
+    ll.push(4)
+    ll.push(5)
+    ll.push(6)
+    ll.push(7)
     ll.remove(7)
     print(list(ll))
 
@@ -177,7 +177,7 @@ def test_linked_list_remove():
 def test_linked_list_append():
     ll = LinkedList()
     ll.prepend(1)
-    ll.append(2)
+    ll.push(2)
     assert list(ll) == [1, 2]
 
 
